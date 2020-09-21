@@ -4,7 +4,7 @@ var im = require('imagemagick');
 const util = require('util');
 const fs = require('fs');
 
-const port = process.env["port"] | 8080;
+const port = process.env["port"] || 8080;
 const app = express();
 
 app.use('/images', express.static('images'))
@@ -17,6 +17,7 @@ app.get("/", async (req, res) => {
 
 app.get("/exif/:fn", async (req, res) => {
   let fn = req.params["fn"];
+
   im.identify(`./images/${fn}`, function (err, info) {
     if (err) res.end(err.message);
     res.json(info);
