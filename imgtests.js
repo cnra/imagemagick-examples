@@ -11,11 +11,11 @@ app.use('/images', express.static('images'))
 
 app.get("/", async (req, res) => {
   var images = fs.readdirSync('./images');
-  var imagelinks = images.map(i => `<a href="exif/${i}">exif</a> <a href="images/${i}">${i}</a>`);
+  var imagelinks = images.map(i => `<a style='border: 1px solid #000; padding: 3px' href="info/${i}">info</a> <a href="images/${i}">${i}</a>`);
   res.end(imagelinks.join("<br />"));
 })
 
-app.get("/exif/:fn", async (req, res) => {
+app.get("/info/:fn", async (req, res) => {
   let fn = req.params["fn"];
 
   im.identify(`./images/${fn}`, function (err, info) {
